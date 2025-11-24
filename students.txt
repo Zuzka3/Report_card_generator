@@ -1,0 +1,10 @@
+Anna;1;1;2;1
+Bob;3;4;4;5
+Cyril;1;1;1;1
+Dana;2;2;3;1
+Filip;5;5;4;5
+Libor;2;1;1;2
+Dominika;3;3;2;1
+Nella;4;4;3;4
+Jakub;1;2;1;1
+Bohdan;5;4;5;5
