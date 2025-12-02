@@ -16,13 +16,10 @@ def worker_process_report(name, grades, result_queue, disk_semaphore, print_lock
         average = total / count
 
         status = "Passed"
-        has_fail = False
-        for g in grades:
-            if g == 5:
-                has_fail = True
 
-        if has_fail:
+        if average > 4.5:
             status = "Failed"
+
         elif average <= 1.5:
             has_bad_grade = False
             for g in grades:
@@ -72,8 +69,8 @@ def producer_load_and_run(filename):
     print("Producer: Starting " + str(len(student_list)) + " processes...")
 
     queue = multiprocessing.Queue()
-    semaphore = multiprocessing.Semaphore(2)  # Max 2 zapisy na disk naraz
-    lock = multiprocessing.Lock()  # Zamek pro print
+    semaphore = multiprocessing.Semaphore(2)
+    lock = multiprocessing.Lock()
 
     processes = []
 
