@@ -17,7 +17,7 @@ def worker_process_report(name, grades, result_queue, disk_semaphore, print_lock
 
         status = "Passed"
 
-        if average > 4.5:
+        if average >= 4.5:
             status = "Failed"
 
         elif average <= 1.5:
