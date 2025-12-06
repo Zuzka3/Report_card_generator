@@ -68,7 +68,7 @@ def producer_load_and_run(filename):
 
     print("Producer: Starting " + str(len(student_list)) + " processes...")
 
-    queue = multiprocessing.Queue()
+    result_queue = multiprocessing.Queue()
     semaphore = multiprocessing.Semaphore(2)
     lock = multiprocessing.Lock()
 
@@ -77,7 +77,7 @@ def producer_load_and_run(filename):
     for s in student_list:
         p = multiprocessing.Process(
             target=worker_process_report,
-            args=(s[0], s[1], queue, semaphore, lock)
+            args=(s[0], s[1], result_queue, semaphore, lock)
         )
         processes.append(p)
         p.start()
@@ -86,13 +86,13 @@ def producer_load_and_run(filename):
         p.join()
 
     print("Producer: All jobs finished.")
-    return queue
+    return result_queue
 
 
-def print_results(results_queue):
+def print_results(result_queue):
     print("\n=== FINAL STATISTICS ===")
 
-    if results_queue is None:
+    if result_queue is None:
         print("No results to show.")
         return
 
@@ -101,8 +101,8 @@ def print_results(results_queue):
     total_students = 0
     sum_averages = 0
 
-    while not results_queue.empty():
-        data = results_queue.get()
+    while not result_queue.empty():
+        data = result_queue.get()
         name = data[0]
         avg = data[1]
         status = data[2]
@@ -130,8 +130,8 @@ def print_results(results_queue):
 if __name__ == "__main__":
     print("=== SCHOOL GRADING SYSTEM STARTED ===")
 
-    queue = producer_load_and_run("students.txt")
+    result_queue = producer_load_and_run("students.txt")
 
-    print_results(queue)
+    print_results(result_queue)
 
     print("\n=== END OF PROGRAM ===")
